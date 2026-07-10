@@ -17,16 +17,16 @@ class AddDeletedAtToTables extends Migration
         ];
 
         // user
-        $this->forge->addColumn('user', $fields);
+        // $this->forge->addColumn('user', $fields);
 
         // product
-        $this->forge->addColumn('product', $fields);
+        // $this->forge->addColumn('product', $fields);
 
         // transaction
-        $this->forge->addColumn('transaction', $fields);
+        //$this->forge->addColumn('transaction', $fields);
 
         // transaction_detail
-        $this->forge->addColumn('transaction_detail', $fields);
+        //$this->forge->addColumn('transaction_detail', $fields);
     }
 
     public function down()

@@ -11,7 +11,6 @@ if (session()->getFlashData('success')) {
 }
 ?>
 <?= form_open('keranjang/edit') ?>
-<!-- Table with stripped rows -->
 <table class="table datatable">
     <thead>
         <tr>
@@ -28,14 +27,24 @@ if (session()->getFlashData('success')) {
         $i = 1;
         if (!empty($items)):
             foreach ($items as $index => $item):
+                $hargaAsli = $item['price'];
+                $hargaFix = $hargaAsli - $diskonNominal;
+                $subtotalItem = $hargaFix * $item['qty'];
                 ?>
                 <tr>
                     <td><?= $item['name'] ?></td>
                     <td><img src="<?= base_url() . "img/" . $item['options']['foto'] ?>" width="100px"></td>
-                    <td><?= number_to_currency($item['price'], 'IDR') ?></td>
+                    <td>
+                        <?php if ($diskonNominal > 0): ?>
+                            <small class="text-danger text-decoration-line-through">
+                                <?= number_to_currency($hargaAsli, 'IDR') ?>
+                            </small><br>
+                        <?php endif; ?>
+                        <?= number_to_currency($hargaFix, 'IDR') ?>
+                    </td>
                     <td><input type="number" min="1" name="qty<?= $i++ ?>" class="form-control" value="<?= $item['qty'] ?>">
                     </td>
-                    <td><?= number_to_currency($item['subtotal'], 'IDR') ?></td>
+                    <td><?= number_to_currency($subtotalItem, 'IDR') ?></td>
                     <td>
                         <a href="<?= base_url('keranjang/delete/' . $item['rowid'] . '') ?>" class="btn btn-danger"><i
                                 class="bi bi-trash"></i></a>
@@ -47,9 +56,7 @@ if (session()->getFlashData('success')) {
         ?>
     </tbody>
 </table>
-<!-- End Table with stripped rows -->
-
-<div class="alert alert-info">
+<div class="alert alert-info" style="background-color: #cff4fc; color: #055160; border-color: #b6effb;">
     <?= "Total = " . number_to_currency($total, 'IDR') ?>
 </div>
 

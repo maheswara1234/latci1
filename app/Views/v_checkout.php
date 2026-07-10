@@ -66,12 +66,22 @@
                 <?php
                 if (!empty($items)):
                     foreach ($items as $index => $item):
+                        $hargaAsli = $item['price'];
+                        $hargaFix = $hargaAsli - $diskonNominal;
+                        $subtotalItem = $hargaFix * $item['qty'];
                         ?>
                         <tr>
                             <td><?= $item['name'] ?></td>
-                            <td><?= number_to_currency($item['price'], 'IDR') ?></td>
+                            <td>
+                                <?php if ($diskonNominal > 0): ?>
+                                    <small class="text-danger text-decoration-line-through">
+                                        <?= number_to_currency($hargaAsli, 'IDR') ?>
+                                    </small><br>
+                                <?php endif; ?>
+                                <?= number_to_currency($hargaFix, 'IDR') ?>
+                            </td>
                             <td><?= $item['qty'] ?></td>
-                            <td><?= number_to_currency($item['price'] * $item['qty'], 'IDR') ?></td>
+                            <td><?= number_to_currency($subtotalItem, 'IDR') ?></td>
                         </tr>
                         <?php
                     endforeach;
@@ -96,7 +106,7 @@
 <script>
     $(document).ready(function () {
         let ongkir = 0;
-        let subtotal = <?= $total ?>;
+        let subtotal = <?= $total ?>; // Variabel total sekarang sudah mencakup pemotongan diskon dari Controller
         hitungTotal();
 
         function hitungTotal() {

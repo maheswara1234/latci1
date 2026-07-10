@@ -16,6 +16,23 @@
     </form>
   </div><!-- End Search Bar -->
 
+  <?php
+  // Set zona waktu dan ambil tanggal hari ini
+  date_default_timezone_set('Asia/Jakarta');
+  $hariIni = date('Y-m-d');
+
+  //koneksi ke database dan mencari diskon hari ini
+  $db = \Config\Database::connect();
+  $diskonHariIni = $db->table('discount')->where('tanggal', $hariIni)->get()->getRowArray();
+  ?>
+
+  <?php if ($diskonHariIni): ?>
+    <div class="d-none d-md-flex align-items-center bg-success text-white px-3 py-1 ms-4 rounded-pill"
+      style="font-size: 14px;">
+      Hari ini ada diskon Rp <?= number_format($diskonHariIni['nominal'], 0, ',', '.') ?> per item
+    </div>
+  <?php endif; ?>
+
   <nav class="header-nav ms-auto">
     <ul class="d-flex align-items-center">
 
@@ -176,8 +193,8 @@
 
         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
           <li class="dropdown-header">
-            <h6>Kevin Anderson</h6>
-            <span>Web Designer</span>
+            <h6><?= session()->get('username'); ?></h6>
+            <span><?= session()->get('role'); ?></span>
           </li>
           <li>
             <hr class="dropdown-divider">

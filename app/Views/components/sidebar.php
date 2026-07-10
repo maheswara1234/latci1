@@ -1,4 +1,3 @@
-<!-- ======= Sidebar ======= -->
 <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
@@ -8,15 +7,13 @@
                 <i class="bi bi-grid"></i>
                 <span>Home</span>
             </a>
-        </li><!-- End Home Nav -->
-
+        </li>
         <li class="nav-item">
             <a class="nav-link <?php echo (uri_string() == 'keranjang') ? "" : "collapsed" ?>" href="keranjang">
                 <i class="bi bi-cart-check"></i>
                 <span>Keranjang</span>
             </a>
-        </li><!-- End Keranjang Nav -->
-        <?php
+        </li><?php
         if (session()->get('role') == 'admin') {
             ?>
             <li class="nav-item">
@@ -24,10 +21,24 @@
                     <i class="bi bi-receipt"></i>
                     <span>Produk</span>
                 </a>
-            </li><!-- End Produk Nav -->
-
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <?php echo (uri_string() == 'diskon') ? "" : "collapsed" ?>"
+                    href="<?= base_url('diskon') ?>">
+                    <i class="bi bi-tags"></i>
+                    <span>Diskon</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <?php echo (uri_string() == 'pembelian') ? "" : "collapsed" ?>"
+                    href="<?= base_url('pembelian') ?>">
+                    <i class="bi bi-cart-check-fill"></i>
+                    <span>Pembelian</span>
+                </a>
+            </li>
             <?php
         }
+
         if (session()->get('role') == 'guest') {
             ?>
             <li class="nav-item">
@@ -35,11 +46,9 @@
                     <i class="bi bi-receipt"></i>
                     <span>Contact</span>
                 </a>
-            </li><!-- End Contact Nav -->
-
-            <?php
+            </li><?php
         }
         ?>
     </ul>
 
-</aside><!-- End Sidebar-->
+</aside>
